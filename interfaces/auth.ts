@@ -1,4 +1,4 @@
-export default interface AuthFormProps {
+export interface AuthFormProps {
   formType: String,
   handleSubmit: (e: React.FormEvent<HTMLButtonElement>) => void,
   setEmail: React.Dispatch<React.SetStateAction<String>> | null,

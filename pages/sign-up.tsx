@@ -1,17 +1,26 @@
 import styles from '../styles/signUp.module.css'
 import Link from "next/link"
 import AuthForm from '../components/AuthForm';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import signUpResponse from '../interfaces/auth'
+import { signUpResponse } from '../interfaces/auth'
+import { checkAuthAndGetUser } from '../utils/utils';
  
 const signUp: React.FC = () => {
-  const [email, setEmail] = React.useState<String>("");
-  const [username, setUsername] = React.useState<String>("");
-  const [password, setPassword] = React.useState<String>("");
-  const [errorMessage, setErrorMessage] = React.useState<String>("");
-
+  const [email, setEmail] = useState<String>("");
+  const [username, setUsername] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+  const [errorMessage, setErrorMessage] = useState<String>("");
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      checkAuthAndGetUser().then((isAuthenticated) => {
+        if (isAuthenticated) router.push('/home');
+      })
+    };
+    checkAuth()
+  }, []);
   
   const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -30,10 +39,14 @@ const signUp: React.FC = () => {
     fetch("http://localhost:8000/api/sign-up", requestOptions)
       .then( async (response) => {
         if (response.status == 201) {
+          const resJson = await response.json();
+          console.log("Sign up response JSON: ", resJson);
+
+          localStorage.setItem('jwt', resJson["token"]);
           router.push('/home');
         } else {
           const res: signUpResponse = await response.json();
-          const err: string = Object.values(res)[0];
+          const err: string = Object.values(res).toString();
           setErrorMessage(err);
         }
       });

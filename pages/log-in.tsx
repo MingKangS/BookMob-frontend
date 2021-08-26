@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/logIn.module.css';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import AuthForm from '../components/AuthForm';
+import { checkAuthAndGetUser } from '../utils/utils';
  
 const logIn: React.FC = () => {
-  const [username, setUsername] = React.useState<String>("");
-  const [password, setPassword] = React.useState<String>("");
-  const [errorMessage, setErrorMessage] = React.useState<String>("");
-
+  const [username, setUsername] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+  const [errorMessage, setErrorMessage] = useState<String>("");
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      checkAuthAndGetUser().then((isAuthenticated) => {
+        if (isAuthenticated) router.push('/home');
+      })
+    };
+    checkAuth()
+  }, []);
   
   const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -25,8 +34,12 @@ const logIn: React.FC = () => {
     };
 
     fetch("http://localhost:8000/api/log-in", requestOptions)
-      .then((response) => {
+      .then(async (response) => {
         if (response.status == 200) {
+          const resJson = await response.json();
+          console.log("Log in response JSON: ", resJson);
+
+          localStorage.setItem('jwt', resJson["token"]);
           router.push('/home');
         } else {
           response.json().then((data) => {
