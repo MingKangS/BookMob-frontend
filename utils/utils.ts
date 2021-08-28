@@ -1,4 +1,4 @@
-export const checkAuthAndGetUser = (): Promise<Response> => {
+export const checkAuthAndGetUser = (): Promise<String | boolean> => {
   const token: String = localStorage.getItem('jwt');
   if (!token) return;
 

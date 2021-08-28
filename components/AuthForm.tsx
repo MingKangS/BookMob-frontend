@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AuthFormProps from "../interfaces/auth";
+import { AuthFormProps } from "../interfaces/auth";
  
 const AuthForm: React.FC<AuthFormProps> = ({formType, handleSubmit, setEmail, setUsername, setPassword, errorMessage, styles}) => {
   return ( 
