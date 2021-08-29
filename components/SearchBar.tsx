@@ -1,5 +1,6 @@
 import { SearchBarProps } from "../interfaces/home";
 import React, { useState, useEffect } from 'react';
+import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
  
 const SearchBar: React.FC<SearchBarProps> = ({styles, setSearchValue}) => {
   const [input, setInput] = useState<string>("")
@@ -10,15 +11,19 @@ const SearchBar: React.FC<SearchBarProps> = ({styles, setSearchValue}) => {
   }
 
   return ( 
-    <form className={styles.searchBar} onSubmit={(e) => {handleFormSubmit(e)}}>
+    <form autoComplete="off" className={styles.searchBar} onSubmit={(e) => {handleFormSubmit(e)}}>
       <input 
-        className=""
+        className={styles.searchInput}
         type="text" 
         name="search" 
         placeholder="Search by title or seller"
         onChange={(e) => setInput(e.target.value)}
       />
-      <input type="submit" value="Submit"/>
+      <SearchTwoToneIcon 
+        className={styles.searchButton} 
+        style={{ fontSize: 48 }}
+        onClick={() => {setSearchValue(input);}}
+        />
     </form>
    );
 }

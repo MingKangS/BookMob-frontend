@@ -45,8 +45,17 @@ const Home: React.FC<HomeProps> = ({ books }) => {
   }, []);
 
   useEffect(() => {
-    setBookList([...bookList].sort((x,y) => {return x[sortByAttribute] > y[sortByAttribute] ? 1 : -1})) 
+    setBookList([...bookList].sort((x,y) => {
+      return x[sortByAttribute] > y[sortByAttribute] ? 1 : -1
+    })) 
   }, [sortByAttribute]);
+
+  useEffect(() => {
+    setBookList([...bookList].filter((book) => {
+      return book.title.toLowerCase().includes(searchValue.toLowerCase()) || 
+        book.seller_username.toLowerCase().includes(searchValue.toLowerCase())
+    })) 
+  }, [searchValue]);
 
   return ( 
     <div>

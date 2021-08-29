@@ -1,10 +1,13 @@
 import { MenuProps } from "../interfaces/home";
+import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
+import { GiHamburgerMenu } from 'react-icons/Gi';
 
 const Menu: React.FC<MenuProps> = ({ router, styles }) => {
   return ( 
     <div className={styles.dropdown}>
-      <button className={styles.dropbtn}>Dropdown
-        <i className={styles.fa + styles.faCaretDown}></i>
+      <button className={styles.dropbtn}>
+        <MenuTwoToneIcon style={{ fontSize: 50 }}/>
+        
       </button>
       <div className={styles.dropdownContent}>
         <a href="#">My List</a>
