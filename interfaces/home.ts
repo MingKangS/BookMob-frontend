@@ -1,7 +1,9 @@
 import { NextRouter } from "next/router"
 
 export interface HomeProps {
-  books: book[]
+  books: {
+    book_list: book[]
+  }
 }
 
 export type book = {
@@ -9,6 +11,7 @@ export type book = {
   "author": string,
   "date_posted": Date,
   "seller": string,
+  "seller_username": string,
   "description": string,
   "condition": number,
   "price": number,
@@ -22,5 +25,10 @@ export interface SearchBarProps {
 
 export interface MenuProps {
   router: NextRouter,
+  styles: {readonly [key: string]: string;},
+}
+
+export interface BookCardProps {
+  book: book,
   styles: {readonly [key: string]: string;},
 }
