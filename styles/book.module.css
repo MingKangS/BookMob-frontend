@@ -1,0 +1,152 @@
+.container {
+	background-color: #eee;
+	min-height: calc(100vh - 60px);
+	position: relative;
+	padding-bottom: 60px;
+}
+
+.bookContainer {
+	display: flex;
+	flex-direction: row;
+	width: 90%;
+	margin: 60px auto 60px auto;
+	background-color: white;
+	border: #02203c solid 5px;
+}
+
+.imgDisplayContainer{
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	margin: 40px 0px 40px 5%;
+}
+
+.displayedImg {
+	height: 300px;
+	width: 300px;
+	object-fit: cover;
+
+}
+
+.window {
+	position: relative;
+}
+
+.windowImg {
+	height: 100px;
+	width: 100px;
+	object-fit: cover;
+	
+}
+
+.windowImg:hover {
+	opacity: 0.8;
+}
+
+.selectedImg {
+	opacity: 0.6 !important;
+}
+
+.navIconDiv {
+	height: 35px;
+	width: 35px;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 40px;
+	background-color: white;
+	opacity: 0.6;
+	cursor: pointer;
+}
+
+.navIconDiv:hover {
+	opacity: 0.9;
+}
+
+.navIconDivPrev {
+	left: 10px;
+}
+
+.navIconDivNext {
+	right: 10px;
+}
+
+.navIcon {
+
+}
+
+.flexRow {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.bookDetailsContainer {
+	margin: 40px 0px auto 5%;
+	width: 60%;
+	min-width: 200px;
+}
+
+.bookDetailsLabel {
+	font-size: small;
+	font-weight: lighter;
+	font-family: "Ubuntu";
+	margin: 5px auto 5px auto;
+	color: rgb(34, 34, 34);
+}
+
+.bookDetail {
+	font-size: x-large;
+	font-weight: bold;
+	font-family: "Nunito";
+	margin: 5px auto 15px auto;
+	color: #02203c;
+}
+
+.bookDescription {
+	font-size: medium;
+	font-weight: bold;
+	font-family: "Nunito";
+	margin: 5px auto 15px auto;
+	color: #02203c;
+}
+
+@media only screen and (max-width:935px) {
+  .bookContainer {
+		flex-direction: column;
+	}
+
+	.imgDisplayContainer{
+		margin: 40px auto 0px auto;
+	}
+	
+	.flexRow {
+		margin: 0px 5% 40px 5%;
+	}
+
+	.bookDetailsContainer {
+		width: 45%;
+	}
+}
+
+@media only screen and (max-width:550px) {
+  .bookContainer {
+		width: 100%;
+		border: none;
+	}
+
+	.imgDisplayContainer{
+		margin: 40px auto 0px auto;
+	}
+	
+	.flexRow {
+		flex-direction: column;
+		margin: 0px auto 40px auto;
+	}
+
+	.bookDetailsContainer {
+		margin: 20px auto auto auto;
+		width: 95%;
+		min-width: 250px;
+		text-align: center;
+	}
+}

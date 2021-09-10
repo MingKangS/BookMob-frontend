@@ -15,6 +15,7 @@ const signUp: React.FC = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
+			if (!localStorage.getItem("jwt")) return;
       checkAuthAndGetUser().then((isAuthenticated) => {
         if (isAuthenticated) router.push('/home');
       })

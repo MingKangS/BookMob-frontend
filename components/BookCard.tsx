@@ -3,13 +3,13 @@ import Link from "next/link";
 
 const BookCard: React.FC<BookCardProps> = ({ styles, book }) => {
   return ( 
-    <Link href="/book">
+    <Link href={"/book/" + book.id.toString()}>
       <div className={styles.bookCard}>
         <p className={styles.seller}>{ book.seller_username }</p>
         <div>
           <img 
             className={styles.image} 
-            src="https://bookmob.s3-ap-southeast-1.amazonaws.com/Book images/iJjQo6rCi4EBktzGTSEMHn.png"
+            src="https://cdn.shopify.com/s/files/1/0511/7575/1837/files/SELF_HELP_e85aa831-a7bb-4109-ac24-3b970aa1bc82_450x.jpg?v=1627866670"
           />
         </div>
         

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import AuthForm from '../components/AuthForm';
 import { checkAuthAndGetUser } from '../utils/utils';
- 
+
 const logIn: React.FC = () => {
   const [username, setUsername] = useState<String>("");
   const [password, setPassword] = useState<String>("");
@@ -13,6 +13,7 @@ const logIn: React.FC = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
+			if (!localStorage.getItem("jwt")) return;
       checkAuthAndGetUser().then((isAuthenticated) => {
         if (isAuthenticated) router.push('/home');
       })

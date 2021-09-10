@@ -3,6 +3,26 @@ import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
 import { GiHamburgerMenu } from 'react-icons/Gi';
 
 const Menu: React.FC<MenuProps> = ({ router, styles }) => {
+	const logOut = () => {
+		const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: localStorage.getItem('jwt')
+      }),
+    };
+
+    fetch("http://localhost:8000/api/log-out", requestOptions)
+      .then((response) => {
+        if (response.status == 200) {
+          localStorage.removeItem('jwt');
+					console.log("You have sucessfully logged out");
+
+          router.push('/log-in');
+        }
+      });
+	}
+
   return ( 
     <div className={styles.dropdown}>
       <button className={styles.dropbtn}>
@@ -12,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ router, styles }) => {
       <div className={styles.dropdownContent}>
         <a href="#">My List</a>
         <a href="#">Account</a>
-        <a href="#">Log out</a>
+        <a href="#" onClick={() => logOut()}>Log out</a>
       </div>
     </div>
    );

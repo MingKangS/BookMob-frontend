@@ -7,6 +7,16 @@
   height: 80px;
 }
 
+.appName {
+	flex-grow: 1;
+  display: flex;
+	justify-content: center;
+	color: white;
+	font-size: xx-large;
+  font-family: "Nunito";
+	font-weight: bold;
+}
+
 /*.searchBarContainer {
   width: 90%;
   height: 50px;

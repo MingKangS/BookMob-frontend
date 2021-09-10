@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HomeProps } from "../interfaces/home";
-import { book } from "../interfaces/home";
+import { book, bookListApiRes } from "../interfaces/home";
 import { checkAuthAndGetUser } from '../utils/utils';
 import { useRouter } from 'next/router';
 import { setupMaster } from 'cluster';
@@ -16,11 +16,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { StaticPropsBook } from '../interfaces/home';
+import { GetStaticPropsResult, GetStaticProps } from 'next';
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (): Promise<GetStaticPropsResult<HomeProps>> => {
   const res = await fetch("http://localhost:8000/api/list-books");
-  const data: book[] = await res.json();
-  console.log(data)
+  const data: bookListApiRes = await res.json();
+  console.log("List of books:", data);
   return {
     props: { books: data }
   };
@@ -35,13 +37,16 @@ const Home: React.FC<HomeProps> = ({ books }) => {
   const router = useRouter();
 
   useEffect(() => {
+		if (!localStorage.getItem("jwt")) {
+			setUser(false);
+			return;
+		}
     const getUser = async () => {
       checkAuthAndGetUser().then((user) => {
         setUser(user);
       })
     };
     getUser();
-    console.log(books);
   }, []);
 
   useEffect(() => {
@@ -62,8 +67,8 @@ const Home: React.FC<HomeProps> = ({ books }) => {
     });
   }
 
-  const handleSelect = (event) => {
-    setSortAttribute(event.target.value);
+  const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSortAttribute(event.target.value as string);
   };
 
   return ( 
@@ -73,35 +78,38 @@ const Home: React.FC<HomeProps> = ({ books }) => {
         <Menu router={router} styles={navbarStyles}/>
         
       </div>
-      <div className={styles.sortByDiv}> 
-        
-        <FormControl variant="outlined" className={styles.formControl}>
-          <label id="select-label" className={styles.selectorLabel}>Sort by:</label>
-          <Select
-            defaultValue="title"
-            labelId="select-label"
-            name="sort-by-attribute" 
-            id="sort-by-attribute"
-            value={sortAttribute}
-            onChange={handleSelect}
-            label="Age"
-            className={styles.sortBySelector}
-            variant="filled"
-            displayEmpty={false}
-          >
-            <MenuItem value="title">Title</MenuItem>
-            <MenuItem value="seller_username">Seller</MenuItem>
-            <MenuItem value="author">Author</MenuItem>
-            <MenuItem value="price">Price</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
+			<div className={styles.sortByDiv}> 
+			
+				<FormControl variant="outlined" className={styles.formControl}>
+					<label id="select-label" className={styles.selectorLabel}>Sort by:</label>
+					<Select
+						defaultValue="title"
+						labelId="select-label"
+						name="sort-by-attribute" 
+						id="sort-by-attribute"
+						value={sortAttribute}
+						onChange={handleSelect}
+						label="Age"
+						className={styles.sortBySelector}
+						variant="filled"
+						displayEmpty={false}
+					>
+						<MenuItem value="title">Title</MenuItem>
+						<MenuItem value="seller_username">Seller</MenuItem>
+						<MenuItem value="author">Author</MenuItem>
+						<MenuItem value="price">Price</MenuItem>
+					</Select>
+				</FormControl>
+			</div>
+			
+			<div className={styles.bookCardContainer}>
+			{bookList.map((book, index) => (
+					<BookCard book={book} styles={styles}/>
+				))}
+			</div>
       
-      <div className={styles.bookCardContainer}>
-      {bookList.map((book, index) => (
-          <BookCard book={book} styles={styles}/>
-        ))}
-      </div>
+
+			<div className="footer"></div>
     </div>
    );
 }
