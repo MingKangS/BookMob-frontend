@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<GetStaticPropsRe
   return {
     props: { books: data }
   };
-}
+};
  
 const Home: React.FC<HomeProps> = ({ books }) => {
   const [user, setUser] = useState<String | boolean>();
@@ -103,7 +103,7 @@ const Home: React.FC<HomeProps> = ({ books }) => {
 			</div>
 			
 			<div className={styles.bookCardContainer}>
-			{bookList.map((book, index) => (
+				{bookList.map((book, index) => (
 					<BookCard book={book} styles={styles}/>
 				))}
 			</div>

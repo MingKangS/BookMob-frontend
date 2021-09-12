@@ -1,6 +1,7 @@
 import { MenuProps } from "../interfaces/home";
 import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
 import { GiHamburgerMenu } from 'react-icons/Gi';
+import Link from "next/link";
 
 const Menu: React.FC<MenuProps> = ({ router, styles }) => {
 	const logOut = () => {
@@ -30,7 +31,7 @@ const Menu: React.FC<MenuProps> = ({ router, styles }) => {
         
       </button>
       <div className={styles.dropdownContent}>
-        <a href="#">My List</a>
+			<Link href="/my-list"><a href="#">My List</a></Link>
         <a href="#">Account</a>
         <a href="#" onClick={() => logOut()}>Log out</a>
       </div>
